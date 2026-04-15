@@ -420,8 +420,9 @@
         </div>
     </div>
 
-    <!-- Hidden audio element -->
-    <audio id="audioMessage" style="display: none;">
+    <!-- Audio element -->
+    <audio id="audioMessage" style="display: none;" onerror="handleAudioError()">
+        <source src="./voice.mp4" type="audio/mpeg">
         <source src="voice.mp4" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -455,6 +456,13 @@
             pauseBtn.style.display = 'none';
             playerStatus.textContent = 'Message played ❤';
         });
+
+        function handleAudioError() {
+            playerStatus.textContent = '⚠️ Audio file not found. Please check back later!';
+            playerStatus.style.color = '#ff6b6b';
+            playBtn.disabled = true;
+            playBtn.style.opacity = '0.5';
+        }
     </script>
 </body>
 </html>
