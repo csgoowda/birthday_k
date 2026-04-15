@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories - Birthday Surprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Great+Vibes&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #9d8b7e 0%, #b5a394 25%, #a89282 50%, #9f8a77 75%, #8b7355 100%);
+            color: #5c4033;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Vintage wall texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><defs><filter id="wallTexture"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" /><feDisplacementMap in="SourceGraphic" scale="100" /></filter></defs><rect width="500" height="500" fill="%239d8b7e"/><path d="M50,100 Q100,150 150,100 T250,100 T350,100" stroke="rgba(0,0,0,0.08)" stroke-width="2" fill="none" filter="url(%23wallTexture)"/><circle cx="80" cy="120" r="40" fill="rgba(120,60,30,0.06)" filter="url(%23wallTexture)"/><circle cx="420" cy="350" r="60" fill="rgba(100,50,25,0.07)"/><circle cx="150" cy="450" r="50" fill="rgba(90,40,20,0.05)"/></svg>'),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,.008) 3px, rgba(0,0,0,.008) 6px);
+            z-index: 0;
+            pointer-events: none;
+            background-attachment: fixed;
+        }
+
+        /* Wall cracks and stains */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(ellipse 600px 400px at 5% 15%, rgba(80,40,20, 0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 350px at 95% 75%, rgba(100,50,25, 0.08) 0%, transparent 65%),
+                radial-gradient(ellipse 400px 300px at 50% 5%, rgba(70,35,15, 0.07) 0%, transparent 60%),
+                linear-gradient(45deg, transparent 30%, rgba(0,0,0,0.02) 50%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            background-attachment: fixed;
+        }
+
+        /* Navigation links */
+        .nav-links {
+            position: fixed;
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #8b6f47;
+            color: #3d2817;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            font-family: 'Crimson Text', serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover {
+            background: #8b6f47;
+            color: #f5ede2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 60px 20px;
+        }
+
+        /* Section title */
+        .section-title {
+            font-family: 'Tangerine', cursive;
+            font-size: clamp(3rem, 10vw, 7rem);
+            color: #3d2817;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.4);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #6b4423;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .ornament {
+            font-size: 1.8rem;
+            color: #8b6f47;
+            margin: 20px 0;
+            letter-spacing: 1rem;
+        }
+
+        /* Intro text */
+        .intro-text {
+            max-width: 700px;
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #4a3728;
+            margin: 30px 0 60px 0;
+            font-style: italic;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(245, 237, 226, 0.7) 0%, rgba(224, 212, 188, 0.7) 100%);
+            padding: 30px;
+            border-left: 4px solid #8b6f47;
+            border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Memory timeline container */
+        .memories-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin: 60px auto;
+            z-index: 15;
+        }
+
+        /* SVG connecting line */
+        .memory-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        /* Memory photos grid */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 60px;
+            position: relative;
+            z-index: 10;
+            align-items: start;
+        }
+
+        .memory-item {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            animation: fadeInScale 0.8s ease-out forwards;
+        }
+
+        .memory-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: 30px;
+        }
+
+        .memory-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 30px;
+        }
+
+        /* Stagger animation for each memory */
+        .memory-item:nth-child(1) { animation-delay: 0.1s; transform: translateX(0); }
+        .memory-item:nth-child(2) { animation-delay: 0.15s; }
+        .memory-item:nth-child(3) { animation-delay: 0.2s; }
+        .memory-item:nth-child(4) { animation-delay: 0.25s; }
+        .memory-item:nth-child(5) { animation-delay: 0.3s; }
+        .memory-item:nth-child(6) { animation-delay: 0.35s; }
+        .memory-item:nth-child(7) { animation-delay: 0.4s; }
+        .memory-item:nth-child(8) { animation-delay: 0.45s; }
+        .memory-item:nth-child(9) { animation-delay: 0.5s; }
+        .memory-item:nth-child(10) { animation-delay: 0.55s; }
+        .memory-item:nth-child(11) { animation-delay: 0.6s; }
+        .memory-item:nth-child(12) { animation-delay: 0.65s; }
+        .memory-item:nth-child(13) { animation-delay: 0.7s; }
+        .memory-item:nth-child(14) { animation-delay: 0.75s; }
+        .memory-item:nth-child(15) { animation-delay: 0.8s; }
+        .memory-item:nth-child(16) { animation-delay: 0.85s; }
+        .memory-item:nth-child(17) { animation-delay: 0.9s; }
+        .memory-item:nth-child(18) { animation-delay: 0.95s; }
+        .memory-item:nth-child(19) { animation-delay: 1s; }
+        .memory-item:nth-child(20) { animation-delay: 1.05s; }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Photo frame */
+        .photo-frame {
+            position: relative;
+            background: linear-gradient(135deg, #f5ede2 0%, #f0e8dd 100%);
+            border: 3px solid #8b6f47;
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.08) rotate(-2deg);
+            filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.35));
+            z-index: 20;
+        }
+
+        /* Varied photo sizes */
+        .memory-item:nth-child(1) .photo-frame { width: 200px; height: 220px; transform: rotate(-8deg); }
+        .memory-item:nth-child(2) .photo-frame { width: 180px; height: 200px; transform: rotate(5deg); }
+        .memory-item:nth-child(3) .photo-frame { width: 210px; height: 230px; transform: rotate(-3deg); }
+        .memory-item:nth-child(4) .photo-frame { width: 190px; height: 210px; transform: rotate(7deg); }
+        .memory-item:nth-child(5) .photo-frame { width: 220px; height: 240px; transform: rotate(-6deg); }
+        .memory-item:nth-child(6) .photo-frame { width: 200px; height: 220px; transform: rotate(4deg); }
+        .memory-item:nth-child(7) .photo-frame { width: 210px; height: 230px; transform: rotate(-5deg); }
+        .memory-item:nth-child(8) .photo-frame { width: 185px; height: 205px; transform: rotate(6deg); }
+        .memory-item:nth-child(9) .photo-frame { width: 215px; height: 235px; transform: rotate(-7deg); }
+        .memory-item:nth-child(10) .photo-frame { width: 195px; height: 215px; transform: rotate(3deg); }
+        .memory-item:nth-child(11) .photo-frame { width: 205px; height: 225px; transform: rotate(-4deg); }
+        .memory-item:nth-child(12) .photo-frame { width: 190px; height: 210px; transform: rotate(8deg); }
+        .memory-item:nth-child(13) .photo-frame { width: 220px; height: 240px; transform: rotate(-6deg); }
+        .memory-item:nth-child(14) .photo-frame { width: 200px; height: 220px; transform: rotate(5deg); }
+        .memory-item:nth-child(15) .photo-frame { width: 210px; height: 230px; transform: rotate(-3deg); }
+        .memory-item:nth-child(16) .photo-frame { width: 185px; height: 205px; transform: rotate(7deg); }
+        .memory-item:nth-child(17) .photo-frame { width: 215px; height: 235px; transform: rotate(-5deg); }
+        .memory-item:nth-child(18) .photo-frame { width: 200px; height: 220px; transform: rotate(4deg); }
+        .memory-item:nth-child(19) .photo-frame { width: 210px; height: 230px; transform: rotate(-8deg); }
+        .memory-item:nth-child(20) .photo-frame { width: 195px; height: 215px; transform: rotate(6deg); }
+
+        /* Photo placeholder */
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e8dcc4 0%, #d9cdc1 50%, #e0d4bc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #c9a574;
+            opacity: 0.6;
+            filter: sepia(0.3) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .photo-frame:hover .photo-placeholder {
+            filter: sepia(0.1) contrast(1.2);
+            opacity: 0.9;
+        }
+
+        /* Memory photo images - full visibility */
+        .memory-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            filter: sepia(0.15) contrast(1.1);
+            transition: filter 0.3s ease;
+        }
+
+        .photo-frame:hover .memory-photo {
+            filter: sepia(0.05) contrast(1.15);
+        }
+
+        /* Tape corners on photo */
+        .tape-corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, rgba(200, 170, 120, 0.6) 0%, rgba(180, 150, 100, 0.5) 100%);
+            border-radius: 2px;
+            box-shadow:
+                inset 0 1px 2px rgba(255, 255, 255, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: rotate(45deg);
+            z-index: 10;
+        }
+
+        .tape-corner.top-left { top: 10px; left: 10px; }
+        .tape-corner.top-right { top: 10px; right: 10px; }
+        .tape-corner.bottom-left { bottom: 10px; left: 10px; }
+        .tape-corner.bottom-right { bottom: 10px; right: 10px; }
+
+        /* Memory number indicator */
+        .memory-number {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #8b6f47;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #8b6f47;
+            z-index: 15;
+        }
+
+        /* Action button */
+        .btn-container {
+            display: flex;
+            gap: 1.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 80px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .btn {
+            padding: 14px 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 3px solid #8b6f47;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #f5ede2 0%, #ede5da 100%);
+            color: #3d2817;
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #8b6f47;
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: #f5ede2;
+            transform: translateY(-3px);
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .memories-grid {
+                grid-template-columns: 1fr;
+                gap: 50px 0;
+            }
+
+            .memory-item {
+                justify-content: center !important;
+                padding: 0 !important;
+            }
+
+            .memory-item:nth-child(1) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(2) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(3) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(4) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(5) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(6) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(7) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(8) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(9) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(10) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(11) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(12) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(13) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(14) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(15) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(16) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(17) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(18) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(19) .photo-frame { width: 160px; height: 180px; }
+            .memory-item:nth-child(20) .photo-frame { width: 160px; height: 180px; }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+                padding: 20px;
+            }
+
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-links">
+        <a href="section2.html" class="nav-link">← Previous</a>
+        <a href="birthday-wishes.html" class="nav-link">Home</a>
+    </div>
+
+    <!-- Main container -->
+    <div class="container">
+        <!-- Title -->
+        <h1 class="section-title">Our Memories</h1>
+        <p class="section-subtitle">Moments that will always stay in my heart</p>
+        <div class="ornament">❦ ✦ ❦</div>
+ <!-- Memories Timeline -->
+        <div class="memories-container">
+            <!-- SVG Connecting Line -->
+            <svg class="memory-line" viewBox="0 0 200 3000" preserveAspectRatio="none">
+                <defs>
+                    <style>
+                        .memory-line-stroke {
+                            stroke: #8b6f47;
+                            stroke-width: 3;
+                            fill: none;
+                            stroke-dasharray: 10, 5;
+                            opacity: 0.4;
+                            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+                        }
+                    </style>
+                </defs>
+                <!-- Zig-zag connecting line -->
+                <polyline class="memory-line-stroke" points="100,50 50,150 150,250 50,350 150,450 50,550 150,650 50,750 150,850 50,950 150,1050 50,1150 150,1250 50,1350 150,1450 50,1550 150,1650 50,1750 150,1850 50,1950" />
+            </svg>
+
+            <!-- Memory grid -->
+            <div class="memories-grid">
+                <!-- Memory 1 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">1</div>
+                </div>
+
+                <!-- Memory 2 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">2</div>
+                </div>
+
+                <!-- Memory 3 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">3</div>
+                </div>
+
+                <!-- Memory 4 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">4</div>
+                </div>
+
+                <!-- Memory 5 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">5</div>
+                </div>
+
+                <!-- Memory 6 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">6</div>
+                </div>
+
+                <!-- Memory 7 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">7</div>
+                </div>
+
+                <!-- Memory 8 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">8</div>
+                </div>
+
+                <!-- Memory 9 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">9</div>
+                </div>
+
+                <!-- Memory 10 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">10</div>
+                </div>
+
+                <!-- Memory 11 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">11</div>
+                </div>
+
+                <!-- Memory 12 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">12</div>
+                </div>
+
+                <!-- Memory 13 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">13</div>
+                </div>
+
+                <!-- Memory 14 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">14</div>
+                </div>
+
+                <!-- Memory 15 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">15</div>
+                </div>
+
+                <!-- Memory 16 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">16</div>
+                </div>
+
+                <!-- Memory 17 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">17</div>
+                </div>
+
+                <!-- Memory 18 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">18</div>
+                </div>
+
+                <!-- Memory 19 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">19</div>
+                </div>
+
+                <!-- Memory 20 -->
+                <div class="memory-item">
+                    <div class="photo-frame">
+                        <img src="kiii.png" class="memory-photo">
+                        <div class="tape-corner top-left"></div>
+                        <div class="tape-corner top-right"></div>
+                        <div class="tape-corner bottom-left"></div>
+                        <div class="tape-corner bottom-right"></div>
+                    </div>
+                    <div class="memory-number">20</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="btn-container">
+            <a href="section4.html" class="btn btn-primary">Next Section</a>
+        </div>
+    </div>
+
+    <script>
+        // Add drift animation for wall elements
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes drift {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                25% { transform: translateY(-20px) rotate(2deg); }
+                50% { transform: translateY(-40px) rotate(-2deg); }
+                75% { transform: translateY(-20px) rotate(1deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
