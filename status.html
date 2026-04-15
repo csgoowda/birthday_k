@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Site - Status Check</title>
+    <style>
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #d4a574;
+            color: #333;
+            padding: 20px;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { color: #8b6f47; margin-bottom: 30px; }
+        .status-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #999;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .status-item.ok { border-left-color: #4CAF50; background: #e8f5e9; }
+        .status-item.error { border-left-color: #f44336; background: #ffebee; }
+        .status-item.loading { border-left-color: #ff9800; background: #fff3e0; }
+        .icon { font-weight: bold; margin-right: 10px; }
+        .ok .icon { color: #4CAF50; }
+        .error .icon { color: #f44336; }
+        .loading .icon { color: #ff9800; }
+        button {
+            background: #8b6f47;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        button:hover { background: #6b4423; }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎂 Birthday Site - Status Check</h1>
+        
+        <div id="status-container"></div>
+        
+        <button onclick="runDiagnostics()">Run Full Diagnostics</button>
+        <button onclick="location.href='/birthday-wishes.html'" style="background: #d4a574; margin-left: 10px;">Go to Birthday Site</button>
+        
+        <h2>Diagnostics Output:</h2>
+        <pre id="diagnostics-output">Loading...</pre>
+    </div>
+
+    <script>
+        const files = [
+            { name: 'birthday-wishes.html', type: 'HTML' },
+            { name: 'section2.html', type: 'HTML' },
+            { name: 'section3.html', type: 'HTML' },
+            { name: 'section4.html', type: 'HTML' },
+            { name: 'section5.html', type: 'HTML' },
+            { name: 'section6.html', type: 'HTML' },
+            { name: 'section7.html', type: 'HTML' },
+            { name: 'video.mp4', type: 'Media' },
+            { name: 'voice.mp4', type: 'Media' },
+            { name: 'kiii.png', type: 'Image' },
+            { name: 'kiri.png', type: 'Image' }
+        ];
+
+        let diagnosticsLog = [];
+
+        function log(message) {
+            diagnosticsLog.push(message);
+            document.getElementById('diagnostics-output').textContent = diagnosticsLog.join('\n');
+        }
+
+        function checkFile(filename) {
+            return new Promise((resolve) => {
+                fetch(filename, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            log(`✓ ${filename} - OK (${response.status})`);
+                            resolve({ file: filename, status: 'ok', statusCode: response.status });
+                        } else {
+                            log(`✗ ${filename} - ERROR (${response.status})`);
+                            resolve({ file: filename, status: 'error', statusCode: response.status });
+                        }
+                    })
+                    .catch(error => {
+                        log(`✗ ${filename} - FAILED (${error.message})`);
+                        resolve({ file: filename, status: 'error', error: error.message });
+                    });
+            });
+        }
+
+        async function runDiagnostics() {
+            log('Starting diagnostics at ' + new Date().toLocaleString());
+            log('-------------------------------------------');
+            log('Checking file availability...\n');
+
+            const results = [];
+            for (const file of files) {
+                const result = await checkFile(file.name);
+                results.push(result);
+            }
+
+            log('\n-------------------------------------------');
+            log('Summary:');
+            const okCount = results.filter(r => r.status === 'ok').length;
+            const errorCount = results.filter(r => r.status === 'error').length;
+            log(`OK: ${okCount}/${files.length}`);
+            log(`ERRORS: ${errorCount}/${files.length}`);
+            
+            if (errorCount > 0) {
+                log('\nFailed files:');
+                results.filter(r => r.status === 'error').forEach(r => {
+                    log(`  - ${r.file}`);
+                });
+            }
+
+            updateStatusDisplay(results);
+        }
+
+        function updateStatusDisplay(results) {
+            const container = document.getElementById('status-container');
+            container.innerHTML = '';
+            
+            results.forEach(result => {
+                const div = document.createElement('div');
+                const statusClass = result.status === 'ok' ? 'status-item ok' : 'status-item error';
+                const icon = result.status === 'ok' ? '✓' : '✗';
+                div.className = statusClass;
+                div.innerHTML = `<span class="icon">${icon}</span><strong>${result.file}</strong>`;
+                container.appendChild(div);
+            });
+        }
+
+        // Run on load
+        runDiagnostics();
+    </script>
+</body>
+</html>

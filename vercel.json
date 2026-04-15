@@ -1,0 +1,8 @@
+{
+  "buildCommand": "echo 'Static site'",
+  "outputDirectory": ".",
+  "framework": "static",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

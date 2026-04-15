@@ -418,9 +418,11 @@
     </div>
 
     <!-- Audio element -->
-    <audio id="audioMessage" style="display: none;" onerror="handleAudioError()">
-        <source src="./voice.mp4" type="audio/mpeg">
+    <audio id="audioMessage" style="display: none;" crossorigin="anonymous" preload="auto" onerror="handleAudioError()">
         <source src="voice.mp4" type="audio/mpeg">
+        <source src="./voice.mp4" type="audio/mpeg">
+        <source src="voice.mp4" type="audio/mp4">
+        <source src="./voice.mp4" type="audio/mp4">
         Your browser does not support the audio element.
     </audio>
 

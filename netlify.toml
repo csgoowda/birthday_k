@@ -1,0 +1,25 @@
+[build]
+  command = "echo 'Building static site'"
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/birthday-wishes.html"
+  status = 200
+
+[[redirects]]
+  from = "/section*"
+  to = ":splat"
+  status = 200
+
+[[redirects]]
+  from = "/*.mp4"
+  to = ":splat.mp4"
+  status = 200
+  headers = { "Cache-Control" = "public, max-age=31536000" }
+
+[[redirects]]
+  from = "/*.png"
+  to = ":splat.png"
+  status = 200
+  headers = { "Cache-Control" = "public, max-age=31536000" }
